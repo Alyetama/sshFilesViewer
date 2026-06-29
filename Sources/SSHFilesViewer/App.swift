@@ -8,8 +8,11 @@ struct SSHFilesViewerApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(model)
-                .frame(minWidth: 940, minHeight: 600)
+                .frame(minWidth: 960, minHeight: 600)
         }
+        // Don't let the window resize below the content's minimum — otherwise the
+        // 3 columns overflow the window and the preview's footer buttons clip.
+        .windowResizability(.contentMinSize)
         .commands {
             SidebarCommands()
             CommandGroup(replacing: .newItem) {

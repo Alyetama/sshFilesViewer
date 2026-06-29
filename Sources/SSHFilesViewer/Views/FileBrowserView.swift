@@ -5,6 +5,7 @@ import AppKit
 
 struct BrowserContainer: View {
     @ObservedObject var session: BrowserSession
+    var onConnected: () -> Void = {}
 
     var body: some View {
         Group {
@@ -32,6 +33,10 @@ struct BrowserContainer: View {
         }
         .task(id: session.connection.id) {
             if session.status == .disconnected { await session.connect() }
+        }
+        // Collapse the sidebar once the connection is established.
+        .onChange(of: session.status) { status in
+            if status == .connected { onConnected() }
         }
     }
 }
@@ -141,11 +146,11 @@ struct FileBrowserView: View {
             }
             // Cap the file list when a preview is open so the preview gets a
             // comfortable share and grows with the window; fill otherwise.
-            .frame(minWidth: 360, maxWidth: showsPreviewPane ? 560 : .infinity)
+            .frame(minWidth: 300, maxWidth: showsPreviewPane ? 560 : .infinity)
 
             if previewMode == .pane, let file = previewFile {
                 PreviewView(session: session, file: file, onClose: { previewFile = nil })
-                    .frame(minWidth: 480, idealWidth: 620, maxWidth: .infinity)
+                    .frame(minWidth: 360, idealWidth: 600, maxWidth: .infinity)
                     .id(file.id)
             }
         }

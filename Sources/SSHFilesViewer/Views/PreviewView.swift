@@ -329,7 +329,7 @@ struct PreviewView: View {
                 if compact {
                     Image(systemName: "arrow.up.forward.app")
                 } else {
-                    Label("Open in Default App", systemImage: "arrow.up.forward.app")
+                    Label("Open", systemImage: "arrow.up.forward.app")
                 }
             }
             .disabled(busy)
