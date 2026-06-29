@@ -1,139 +1,71 @@
 <p align="center">
-  <img src="docs/icon.png" width="120" alt="SSH Files Viewer icon" />
+  <img src="docs/icon.png" width="116" alt="SSH Files Viewer icon" />
 </p>
 
 <h1 align="center">SSH Files Viewer</h1>
 
 <p align="center">
-  A beautiful, robust <strong>native macOS app</strong> to browse, preview,
-  edit, and download files on your remote machines over SSH.
+  A beautiful, native macOS app to browse, preview, edit, and download files on
+  your remote machines over SSH.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/SwiftUI-macOS%2013%2B-blue" alt="Built with SwiftUI" />
+  <img src="https://img.shields.io/badge/macOS-13%2B-blue" alt="macOS 13+" />
+  <img src="https://img.shields.io/badge/SwiftUI-orange" alt="SwiftUI" />
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" />
 </p>
 
-## Download
-
-Grab the latest `SSHFilesViewer.dmg` from the
-[**releases page**](https://github.com/Alyetama/sshFilesViewer/releases/latest),
-open it, and drag the app into your **Applications** folder.
-
-### Opening the app the first time
-
-SSH Files Viewer is open-source and ad-hoc signed — there's no paid Apple
-Developer ID — so macOS Gatekeeper blocks it on first launch. After moving the
-app into **Applications**, do one of these once:
-
-**Option A — Terminal (quickest)**
-
-```bash
-xattr -dr com.apple.quarantine /Applications/SSHFilesViewer.app
-```
-
-Then open the app normally.
-
-**Option B — System Settings**
-
-1. Double-click the app. When macOS says it can't verify the developer, click **Done**.
-2. Open **System Settings → Privacy & Security**.
-3. Scroll to **Security** and click **Open Anyway** next to the "SSHFilesViewer was blocked" message.
-4. Click **Open** to confirm. It launches normally from then on.
+<p align="center">
+  <img src="docs/mockup.png" width="820" alt="SSH Files Viewer — file browser with a syntax-highlighted code preview" />
+</p>
 
 ## Features
 
-- **Saved connections** — manage a sidebar of remote machines, each with a live
-  connection-status indicator.
-- **Three auth methods** — SSH agent, a private key file, or a password
-  (stored securely in the macOS **Keychain**).
-- **Fast browsing** — uses OpenSSH **connection multiplexing**, so the first
-  connect authenticates once and every later listing, preview, and download
-  reuses the same session.
-- **Full file browser** — breadcrumb navigation, back / forward / up / home,
-  a live filter field, color-coded file-type icons, sizes, and modified dates.
-- **Inline preview** — view text and images right inside the app, or open any
-  file in its default macOS app.
-- **Downloads** — one-click download to your Downloads folder (or *Download As…*
-  to choose), with a live progress tray and *Reveal in Finder*.
+- **Browse** any remote machine — breadcrumbs, history, live filter, and real language-logo file icons.
+- **Preview** syntax-highlighted code (8 themes), images, and CSV/TSV as a spreadsheet, in a side panel or its own window.
+- **Edit & save** text files in place — explicit save (⌘S), unsaved-changes indicator, save-on-close prompt, no autosave.
+- **Download** with live progress, or open files in their default macOS app.
+- **Connect** with an SSH agent, a key file, or a password (stored in the **Keychain**).
+- **Fast & dependency-free** — drives the system `ssh` with connection multiplexing, reusing your `~/.ssh/config`, keys, and agent.
 
-## Why it’s robust
+## Download
 
-- **No third-party dependencies.** It drives the system `ssh` binary, so it
-  transparently uses your existing `~/.ssh/config`, keys, agent, `known_hosts`,
-  and even `ProxyJump`/bastion setups.
-- **Careful listing parser** that preserves exact filenames (including spaces),
-  handles symlinks, ACL suffixes, device files, and is portable across
-  Linux/BSD remotes — no GNU-only or Python assumptions.
-- **Headless password auth** via an `SSH_ASKPASS` helper with
-  `SSH_ASKPASS_REQUIRE=force` — the password is never placed on a command line.
-- Host keys are accepted on first use (`StrictHostKeyChecking=accept-new`).
+Get the latest `SSHFilesViewer.dmg` from the
+[**releases page**](https://github.com/Alyetama/sshFilesViewer/releases/latest),
+open it, and drag the app into **Applications**.
 
-## Build & run
+### Opening it the first time
+
+The app is open-source and ad-hoc signed (no paid Apple Developer ID), so macOS
+Gatekeeper blocks it on first launch. Do one of these once:
 
 ```bash
-./run.sh          # build a release .app and launch it
-./build.sh        # just build SSHFilesViewer.app
-./build.sh debug  # debug build
+# Quickest — clear the quarantine flag, then open normally:
+xattr -dr com.apple.quarantine /Applications/SSHFilesViewer.app
 ```
 
-Requirements: macOS 13+, the Swift 6 toolchain (Xcode command-line tools), and
-the `ssh` binary (ships with macOS).
+Or open it via the GUI: double-click → **Done**, then **System Settings →
+Privacy & Security → Open Anyway**.
 
-## How it works
+## Build from source
 
-| Action            | Under the hood                                            |
-|-------------------|-----------------------------------------------------------|
-| List a folder     | `ssh host 'cd -- DIR && LC_ALL=C ls -la'` → parsed        |
-| Preview a file    | `ssh host 'head -c N -- FILE'` (text/image sniffing)      |
-| Download a file   | `ssh host 'cat -- FILE'` streamed to disk, with progress  |
-| Connection reuse  | `ControlMaster=auto` + `ControlPersist`                   |
-
-## Project layout
-
-```
-Sources/SSHFilesViewer/
-  App.swift            – @main app + menu commands + Settings
-  Models.swift         – Connection, RemoteFile, path helpers
-  Persistence.swift    – connections.json + Keychain
-  SSHClient.swift      – the SSH transport, ls parser, askpass helper
-  Session.swift        – BrowserSession + AppModel + downloads
-  Theme.swift          – icons, colors, formatting
-  Views/               – ContentView, Sidebar, Editor, Browser, Preview, Settings
-Tools/                 – app-icon generator
+```bash
+git clone https://github.com/Alyetama/sshFilesViewer.git
+cd sshFilesViewer
+./run.sh        # builds a release .app and launches it
 ```
 
-## Notes
-
-- For key-based auth with a passphrase-protected key, add the key to your
-  `ssh-agent` first (`ssh-add ~/.ssh/id_…`) and use the **SSH Agent** method.
-- The app is ad-hoc code-signed and unsandboxed (so it can run `ssh` and write
-  to your chosen download folder).
+Requires macOS 13+, the Swift toolchain (Xcode command-line tools), and `ssh`
+(ships with macOS).
 
 ## Security
 
-- Passwords are stored in the macOS **Keychain** and are never written to disk
-  in plaintext or placed on a command line — password auth is driven through an
-  `SSH_ASKPASS` helper that reads the value from the process environment.
-- Every remote path is single-quote escaped before it's used in a shell command,
-  and the ssh hostname is passed after `--` to prevent option injection.
-- Host keys are accepted on first use (`StrictHostKeyChecking=accept-new`); after
-  that, a changed key is rejected like normal OpenSSH.
-- Saved connections live in `~/Library/Application Support/SSHFilesViewer/`, not
-  in this repository.
-
-## Publishing
-
-A landing page lives in [`docs/`](docs/index.html) and is served via GitHub
-Pages. Publishing is a single script (review it first — it is not run for you):
-
-```bash
-./scripts/publish.sh
-```
-
-It creates/updates the GitHub repo, sets the description and topics, enables
-GitHub Pages from `main` `/docs`, and cuts a release with a zipped `.app`.
+Passwords live in the macOS **Keychain** — never on disk in plaintext or on a
+command line. Remote paths are shell-escaped, and the ssh hostname is passed
+after `--` to block option injection. Saved connections are stored under
+`~/Library/Application Support/SSHFilesViewer/`, not in this repo.
 
 ## License
 
-[MIT](LICENSE) © Alyetama. Bundled language logos are from
+[MIT](LICENSE) © Alyetama. Language logos are from
 [devicon](https://github.com/devicons/devicon) (MIT).
