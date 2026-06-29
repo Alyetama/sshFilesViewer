@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SSH Files Viewer — browse, preview &amp; edit remote files over SSH</title>
+<meta name="description" content="A beautiful, robust native macOS app to browse, preview, edit, and download files on your remote machines over SSH." />
+<meta property="og:title" content="SSH Files Viewer" />
+<meta property="og:description" content="Browse, preview, edit, and download files on your remote machines over SSH — native macOS, dependency-free." />
+<meta property="og:type" content="website" />
+<style>
+  :root {
+    --bg: #21252b; --panel: #282c34; --panel2: #2c313a; --fg: #abb2bf; --fg-strong: #e6e9ef;
+    --muted: #7f8794; --line: #3a3f4b;
+    --accent: #61afef; --green: #98c379; --purple: #c678dd; --orange: #d19a66; --yellow: #e5c07b; --red: #e06c75;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  code, .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+
+  header { text-align: center; padding: 96px 0 56px; }
+  .logo {
+    width: 104px; height: 104px; border-radius: 24px; margin: 0 auto 28px;
+    background: linear-gradient(135deg, #5470fc, #8543f2);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 16px 40px rgba(101, 79, 240, 0.35);
+  }
+  .logo svg { width: 58px; height: 58px; fill: #fff; }
+  h1 { font-size: 44px; margin: 0 0 10px; color: var(--fg-strong); letter-spacing: -0.5px; }
+  .tagline { font-size: 19px; color: var(--muted); margin: 0 auto 32px; max-width: 620px; }
+  .cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 10px; font-weight: 600;
+    background: var(--green); color: #1c1f24; transition: transform .12s ease, filter .12s ease;
+  }
+  .btn:hover { filter: brightness(1.06); transform: translateY(-1px); text-decoration: none; }
+  .btn.secondary { background: var(--panel2); color: var(--fg-strong); border: 1px solid var(--line); }
+
+  section { padding: 40px 0; }
+  h2 { color: var(--fg-strong); font-size: 26px; margin: 0 0 24px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px;
+  }
+  .card .ico { font-size: 22px; margin-bottom: 8px; }
+  .card h3 { margin: 0 0 6px; color: var(--fg-strong); font-size: 16.5px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14.5px; }
+
+  .code {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px; overflow-x: auto; font-size: 14px; color: var(--fg);
+  }
+  .code .c { color: var(--muted); } .code .k { color: var(--purple); } .code .s { color: var(--green); }
+  .pill {
+    display: inline-block; font-size: 12.5px; padding: 4px 11px; border-radius: 999px;
+    background: var(--panel2); border: 1px solid var(--line); color: var(--fg); margin: 0 6px 8px 0;
+  }
+  footer { border-top: 1px solid var(--line); margin-top: 48px; padding: 32px 0 60px; color: var(--muted); font-size: 14px; text-align: center; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="logo" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-6l-2 4-2-4H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zm2 4v2h2V8H6zm0 4v2h8v-2H6zm10-4v2h2V8h-2z"/></svg>
+    </div>
+    <h1>SSH Files Viewer</h1>
+    <p class="tagline">A beautiful, robust native macOS app to browse, preview, edit, and download files on your remote machines over SSH.</p>
+    <div class="cta">
+      <a class="btn" href="https://github.com/Alyetama/sshFilesViewer/releases/latest">Download for macOS</a>
+      <a class="btn secondary" href="https://github.com/Alyetama/sshFilesViewer">View on GitHub</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2>Features</h2>
+    <div class="grid">
+      <div class="card"><div class="ico">🗂️</div><h3>Full remote browser</h3><p>Breadcrumb navigation, back/forward/up/home, live filtering, and color-coded file-type icons with real language logos.</p></div>
+      <div class="card"><div class="ico">👁️</div><h3>Rich previews</h3><p>Syntax-highlighted code, inline images, and CSV/TSV rendered as a real spreadsheet — in a side panel or its own window.</p></div>
+      <div class="card"><div class="ico">✏️</div><h3>Edit &amp; save</h3><p>Edit text files in place with explicit saving (⌘S), an unsaved-changes indicator, and a save-on-close prompt. No autosave.</p></div>
+      <div class="card"><div class="ico">🎨</div><h3>8 color schemes</h3><p>One Dark, Dracula, Nord, Monokai, Gruvbox, Solarized (dark &amp; light), and GitHub Light — with adjustable font size and wrapping.</p></div>
+      <div class="card"><div class="ico">⬇️</div><h3>Download anything</h3><p>One-click download with live progress, or open files in their default macOS app.</p></div>
+      <div class="card"><div class="ico">🔒</div><h3>Secure by design</h3><p>Reuses your existing SSH config, keys, and agent. Passwords stay in the macOS Keychain — never on a command line.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Why it's robust</h2>
+    <p>Zero third-party runtime dependencies — it drives the system <code>ssh</code> binary, so it transparently works with your <code>~/.ssh/config</code>, keys, agent, <code>known_hosts</code>, and jump hosts. Connection multiplexing keeps listing, preview, and download fast. A careful, portable listing parser preserves exact filenames across Linux and BSD remotes.</p>
+    <div style="margin-top:18px">
+      <span class="pill">macOS 13+</span><span class="pill">SwiftUI</span><span class="pill">No dependencies</span>
+      <span class="pill">Keychain</span><span class="pill">SSH multiplexing</span><span class="pill">TextKit previews</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Build from source</h2>
+    <div class="code mono">
+<span class="c"># Requires macOS 13+, Xcode command-line tools, and ssh (ships with macOS)</span><br/>
+git <span class="k">clone</span> https://github.com/Alyetama/sshFilesViewer.git<br/>
+<span class="k">cd</span> sshFilesViewer<br/>
+./run.sh   <span class="c"># builds a release .app and launches it</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Released under the <a href="https://github.com/Alyetama/sshFilesViewer/blob/main/LICENSE">MIT License</a>.
+    Language logos by <a href="https://github.com/devicons/devicon">devicon</a> (MIT).
+  </div>
+</footer>
+</body>
+</html>
