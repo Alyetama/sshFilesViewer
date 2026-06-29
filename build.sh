@@ -23,7 +23,7 @@ if [[ ! -f "$BIN" ]]; then
 	exit 1
 fi
 
-echo "▸ Assembling $BUNDLE…"
+echo "▸ Assembling ${BUNDLE}…"
 rm -rf "$BUNDLE"
 mkdir -p "$BUNDLE/Contents/MacOS" "$BUNDLE/Contents/Resources"
 cp "$BIN" "$BUNDLE/Contents/MacOS/$APP"
