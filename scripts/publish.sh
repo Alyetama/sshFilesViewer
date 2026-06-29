@@ -82,7 +82,7 @@ Gatekeeper blocks it on first launch. Do one of these once:
 
 **Terminal (quickest)**
 ```
-xattr -dr com.apple.quarantine /Applications/SSHFilesViewer.app
+/usr/bin/xattr -dr com.apple.quarantine /Applications/SSHFilesViewer.app
 ```
 then open it normally.
 

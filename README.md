@@ -41,7 +41,7 @@ Gatekeeper blocks it on first launch. Do one of these once:
 
 ```bash
 # Quickest — clear the quarantine flag, then open normally:
-xattr -dr com.apple.quarantine /Applications/SSHFilesViewer.app
+/usr/bin/xattr -dr com.apple.quarantine /Applications/SSHFilesViewer.app
 ```
 
 Or open it via the GUI: double-click → **Done**, then **System Settings →
