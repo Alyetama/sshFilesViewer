@@ -1,6 +1,12 @@
 import SwiftUI
 import AppKit
 
+extension NSImage {
+    /// The app's own bundle icon — used for the in-app logo so it always matches
+    /// whatever AppIcon.icns ships.
+    static var appIcon: NSImage { NSApplication.shared.applicationIconImage }
+}
+
 // MARK: - File icon styling
 
 enum FileIcon {

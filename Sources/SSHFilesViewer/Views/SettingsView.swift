@@ -144,13 +144,10 @@ private struct ThemeSwatch: View {
 private struct AboutSettingsView: View {
     var body: some View {
         VStack(spacing: 14) {
-            Image(systemName: "externaldrive.connected.to.line.below.fill")
-                .font(.system(size: 46))
-                .foregroundStyle(
-                    LinearGradient(colors: [Color(red: 0.33, green: 0.45, blue: 0.99),
-                                            Color(red: 0.52, green: 0.27, blue: 0.95)],
-                                   startPoint: .topLeading, endPoint: .bottomTrailing)
-                )
+            Image(nsImage: .appIcon)
+                .resizable()
+                .interpolation(.high)
+                .frame(width: 72, height: 72)
             Text("SSH Files Viewer").font(.title2.weight(.bold))
             Text("Version 1.0").foregroundStyle(.secondary)
 

@@ -1,4 +1,5 @@
 import SwiftUI
+import AppKit
 
 struct ContentView: View {
     @EnvironmentObject var model: AppModel
@@ -39,13 +40,10 @@ struct WelcomeView: View {
 
     var body: some View {
         VStack(spacing: 18) {
-            Image(systemName: "externaldrive.connected.to.line.below.fill")
-                .font(.system(size: 64, weight: .regular))
-                .foregroundStyle(
-                    LinearGradient(colors: [Color(red: 0.33, green: 0.45, blue: 0.99),
-                                            Color(red: 0.52, green: 0.27, blue: 0.95)],
-                                   startPoint: .topLeading, endPoint: .bottomTrailing)
-                )
+            Image(nsImage: .appIcon)
+                .resizable()
+                .interpolation(.high)
+                .frame(width: 96, height: 96)
             VStack(spacing: 6) {
                 Text("SSH Files Viewer")
                     .font(.system(size: 26, weight: .bold))

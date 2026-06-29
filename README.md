@@ -1,10 +1,44 @@
-# SSH Files Viewer
+<p align="center">
+  <img src="docs/icon.png" width="120" alt="SSH Files Viewer icon" />
+</p>
 
-A beautiful, robust **native macOS app** for browsing files on your remote
-machines over SSH — navigate folders, preview files inline, and download them
-with a click.
+<h1 align="center">SSH Files Viewer</h1>
 
-![Built with SwiftUI](https://img.shields.io/badge/SwiftUI-macOS%2013%2B-blue)
+<p align="center">
+  A beautiful, robust <strong>native macOS app</strong> to browse, preview,
+  edit, and download files on your remote machines over SSH.
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/SwiftUI-macOS%2013%2B-blue" alt="Built with SwiftUI" />
+</p>
+
+## Download
+
+Grab the latest `SSHFilesViewer.dmg` from the
+[**releases page**](https://github.com/Alyetama/sshFilesViewer/releases/latest),
+open it, and drag the app into your **Applications** folder.
+
+### Opening the app the first time
+
+SSH Files Viewer is open-source and ad-hoc signed — there's no paid Apple
+Developer ID — so macOS Gatekeeper blocks it on first launch. After moving the
+app into **Applications**, do one of these once:
+
+**Option A — Terminal (quickest)**
+
+```bash
+xattr -dr com.apple.quarantine /Applications/SSHFilesViewer.app
+```
+
+Then open the app normally.
+
+**Option B — System Settings**
+
+1. Double-click the app. When macOS says it can't verify the developer, click **Done**.
+2. Open **System Settings → Privacy & Security**.
+3. Scroll to **Security** and click **Open Anyway** next to the "SSHFilesViewer was blocked" message.
+4. Click **Open** to confirm. It launches normally from then on.
 
 ## Features
 
